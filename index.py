@@ -10,4 +10,4 @@ multiples =[]
 for i in range(1,101):
     if i % 3 == 0:
         multiples.append(i)
-print(F" {multiples} is a list of multiple of 3")
+print(F"{multiples} is a list of multiple of 3")
