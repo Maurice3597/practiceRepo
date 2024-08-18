@@ -1,12 +1,13 @@
-#This code produces the multiplication table for any chosen number
-n = int(input("Enter the number whose multiplication table you're looking for: "))
-print(f"\nThe multiplcation table for {n} is\n")
-for i in range(1, 13):
-    print(f"{n} x {i} = {n * i} \n")
-print("Hello World\n")
+# This code is for a todo app
+user_prompt = input("Enter an an option below to continue")
+print("""HINT
+	Add --> To add a task
+	Remove or Delete --> To delete a todo task
+	Edit --> To edit the todo list
+	Show or Display --> To show or display todo list
+	Quit or Exit --> To quit or edit the todo
+	Completed --> To mark a todo task as completed""")
 
-multiples =[]
-for k in range(1,101):
-    if k % 3 == 0:
-        multiples.append(k)
-print(F" {multiples} is a list of multiple of 3")
+while True:
+	todo = input("Enter a a task to do")
+	match user_prompt
