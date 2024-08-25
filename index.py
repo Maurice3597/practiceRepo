@@ -8,37 +8,44 @@ print("""		HINT
 	Quit or Exit --> To quit or edit the todo
 	Completed --> To mark a todo task as completed\n""")
 
-todos =[]
 while True:
-	user_action = (input("Enter an option here to continue: ")).lower()#+ "\n"
-	match user_action:
-		case "add":
-			todo = input("Add a TODO task: ") + "\t"
-			todos.append(todo)
-			file = open('todos.txt', 'w')
-			file.writelines(todos)
-			file.close()
-			for i, j in enumerate(todos):
-				row = f"{i+1}-{j}"
-				print(row)
-		
-		case "edit":
-			""
+    user_prompt = ((input("Enter a Todo:\n")).lower()).lstrip()
+    
+    if user_prompt.startswith("add"):
+        todo = (user_prompt[4:]).lstrip() + "\n"
+        with open('todos.txt', 'r') as file:
+            todos = file.readlines()
+            
+        todos.append(todo)
+        with open('todos.txt','w') as file:
+            file.writelines(todos)
+        print(f"{todo}Successfully added to the the TODO list")
+        
+    elif user_prompt.startswith("edit"):
+        New_todo = (user_prompt[4:]).lstrip() + "\n"
+        To_edit = int(input("Enter the number you want to edit: "))
+        
+        with open('todos.txt', 'r') as file:
+                todos = file.readlines()
 
-		case "remove" | "Delete":
-			todo = input("Enter the TODO task you want to delete or remove: ")
-			print(f"{todo} removed from list")
+        print(f"Are you sure you want to edit {todos[To_edit]}??\n")
+        Response = (input("Enter Yes or No to proceed: ")).capitalize()
 
-		case "show" | "display":
-			""
+        if Response == "Yes":
+            with open('todos.txt', 'r') as file:
+                todos = file.readlines()
 
-		case "complete" | "done":
-			todo = input("Enter the TODO task you have completed: ")
-			todos = todos.remove(todo)
-			print(f"{todo} completed and removed from list")
-		case "quit" | "exit":
-			break
+            todos[To_edit] = New_todo
+            
+            with open('todos.txt', 'w') as file:
+                todos = file.writelines(todos)
+                print(f"{todos[To_edit]} succesfully edited to {New_todo}")
+        
+        elif Response == "No":
+            exit
 
-		case _:
-			print("Sorry, you typed the wrong command\nSee the hint for the right commands")
+        else:
+            print("Wrong command")
 
+    else:
+        break
