@@ -39,7 +39,7 @@ while True:
             
             with open('todos.txt', 'w') as file:
                 todos = file.writelines(todos)
-                #print(f"{todos[To_edit]} succesfully edited to {New_todo}")
+                #print(f"{todos[To_edit]} succesfully edited to {New_todo}") This a bug to be debugged in a later version
         
         elif Response == "No":
             exit
