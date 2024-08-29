@@ -9,78 +9,105 @@ print("""		HINT
 	Completed --> To mark a todo task as completed\n""")
 
 while True:
-	user_action = (input("Enter an option here to continue: ")).lower()#+ "\n"
-	match user_action:
-		case "add":
-			todo = input("Add a TODO task: ") + "\t"
-			
-			file = open('todos.txt', 'r')
-			todos = file.readlines()
-			file.close()
+    user_prompt = ((input("Enter a Todo:\n")).lower()).lstrip()
+    
+    if user_prompt.startswith("add"):
+        todo = (user_prompt[4:]).lstrip() + "\n"
+        with open('todos.txt', 'r') as file:
+            todos = file.readlines()
+            
+        todos.append(todo)
+        with open('todos.txt','w') as file:
+            file.writelines(todos)
+        print(f"\"{todo}\" Successfully added to the the TODO list")
+        
+    elif user_prompt.startswith("edit"):
+        New_todo = (user_prompt[4:]).lstrip() + "\n"
+        To_edit = int(input("Enter the number you want to edit: "))
+        
+        with open('todos.txt', 'r') as file:
+                todos = file.readlines()
 
-			todos.append(todo)
+        print(f"Are you sure you want to edit \"{todos[To_edit]}\" ??\n")
+        Response = (input("Enter Yes or No to proceed: ")).capitalize()
 
-			file = open('todos.txt', 'w')
-			file.writelines(todos)
-			file.close()
-			#just trying to see if the right todo list will be printed out
-			for i, j in enumerate(todos):
-				row = f"{i+1}-{j}"
-				print(row)
-		
-		case "edit":
-			todo = input("Enter the Todo you want too edit: ") + "\n"
-			New_todo = input("Enter the new Todo: ")
+        if Response == "Yes":
+            with open('todos.txt', 'r') as file:
+                todos = file.readlines()
 
-			file = open('todos.txt', 'r')
-			todos = file.readlines()
-			file.close()
+            todos[To_edit - 1] = New_todo
+            
+            with open('todos.txt', 'w') as file:
+                todos = file.writelines(todos)
+                #print(f"{todos[To_edit]} succesfully edited to {New_todo}") This a bug to be debugged in a later version
+        
+        elif Response == "No":
+            exit
 
-			if todo in todos:
-				todos.remove(todo)
-				todos.append(New_todo)
-				file = open('todos.txt', 'w')
-				file.writelines(todos)
-				file.close()
-				for i, j in enumerate(todos):
-					row = f"{i+1}-{j}"
-					print(row)
-			else:
-				print(f"MISMATCH!!\nSorry couldn't find {todo} in the TODO list")
+        else:
+            print("Wrong command\nPlease enter 'YES' to edit or 'NO' to cancel editing")
 
-		case "remove" | "Delete":
-			todo = input("Enter the TODO task you want to delete or remove: ")
-			
-			file = open('todos.txt', 'r')
-			todos = file.readlines()
-			file.close()
+    elif user_prompt.startswith("show"):
+        with open('todos.txt') as file:
+            todos = file.readlines()
 
-			if todo in todos:
-				todos.remove(todo)
-				print(f"{todo} removed from list")
-			else:
-				print(f"Couldn't find {todo} in the TODO list")
+        todos = [item.strip('\n') for item in todos]
+        for position, task in enumerate(todos):
+            print(f"{position + 1}- {task}")
+        
+    elif user_prompt.startswith("delete"):
+        To_delete = int(input("Enter the todo number you want to delete: "))
 
-		case "show" | "display":
-			file = open('todos.txt', r)
-			todos = file.readlines()
-			file.close()
+        with open('todos.txt') as file:
+            todos = file.readlines()
+
+        print(f"Are you sure you want to delete \"{todos[To_delete - 1]}\" ??\n:")
+
+        Response = (input("Enter Yes or No to proceed: ")).capitalize()
+
+        if Response == "Yes":
+            with open('todos.txt', 'r') as file:
+                todos = file.readlines()
+
+            todos.remove(todos[To_delete - 1])
+            
+            with open('todos.txt', 'w') as file:
+                todos = file.writelines(todos)
+                #print(f"{todos[To_edit]} succesfully edited to {New_todo}")
+        
+        elif Response == "No":
+            exit
+            
+        else:
+            print("Wrong command\nPlease enter 'YES' to delete or 'NO' to cancel deleting")
+
+    elif user_prompt.startswith("completed"):
+        Completed = int(input("Enter the todo number you want to mark as completed: "))
+
+        with open('todos.txt') as file:
+            todos = file.readlines()
+
+        print(f"Are you sure you want to mark \"{todos[Completed - 1]}\" as completed??\n"
+              "Note that this action will also delete the completed task from the list:")
+
+        Response = (input("Enter Yes or No to proceed: ")).capitalize()
+
+        if Response == "Yes":
+            with open('todos.txt', 'r') as file:
+                todos = file.readlines()
+
+            todos.remove(todos[Completed - 1])
+            
+            with open('todos.txt', 'w') as file:
+                todos = file.writelines(todos)
+            print(f"\"{todos[Completed - 1]}\" completed successfully and removed from the list")
+        
+        elif Response == "No":
+            exit
+            
+        else:
+            print("Wrong command\nPlease enter 'YES' to approve task as completed or 'NO' to cancel")
 
 
-
-		case "complete" | "done":
-			todo = input("Enter the TODO task you have completed: ")
-			if todo in todos:
-				todos = todos.remove(todo)
-			
-				print(f"{todo} completed and removed from list")
-			else:
-				print(f"Sorry can't find {todo} in the todos list")
-
-		case "quit" | "exit":
-			break
-
-		case _:
-			print("Sorry, you typed the wrong command\nSee the hint for the right commands")
-
-
+    else:
+        break

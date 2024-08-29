@@ -1,2 +1,13 @@
-Church	Lecture	Study	
-School	Work	
+<<<<<<< HEAD
+visit mom
+do some python coding in the evening
+visit Becky
+go for tutorials by 3pm
+go shopping
+=======
+wash the plates
+clean the dishes
+play chess
+visit mommy
+go for lectures
+>>>>>>> a7f0a12767ec81df89421e3dc5464bdc134baa55
