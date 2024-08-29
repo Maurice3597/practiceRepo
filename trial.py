@@ -23,3 +23,7 @@ with open('todos.txt', 'r') as file:
     todos = file.readlines()
 print(todos)
 >>>>>>> a7f0a12767ec81df89421e3dc5464bdc134baa55
+
+with open('todos.txt', 'r') as file:
+    todos = file.readlines()
+print(todos)
