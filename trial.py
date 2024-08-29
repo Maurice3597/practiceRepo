@@ -1,4 +1,5 @@
 
+<<<<<<< HEAD
 To_delete = int(input("Enter the todo number yu want to delete: "))
 Response = (input("Enter Yes or No to proceed: ")).capitalize()
 
@@ -17,3 +18,8 @@ elif Response == "No":
 
 else:
     print("Wrong command\nPlease enter 'YES' to delete or 'NO' to cancel deleting")
+=======
+with open('todos.txt', 'r') as file:
+    todos = file.readlines()
+print(todos)
+>>>>>>> a7f0a12767ec81df89421e3dc5464bdc134baa55
