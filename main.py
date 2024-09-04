@@ -1,18 +1,26 @@
 import FreeSimpleGUI as fsg
 import functions as fxns
 
-
 label = fsg.Text("Type in a to-do")
 input_box = fsg.InputText(tooltip="Enter  todo", key= "todo")
-add_button =fsg.Button("Add")
+add_btn = fsg.Button("Add")
+list_box = fsg.Listbox( values=fxns.get_todos(),
+                        key= 'todos',
+                        enable_events=True,
+                        size=[40, 15])
+edit_btn = fsg.Button("Edit")
+complete_btn = fsg.Button("Complete")
 
 windows = fsg.Window("Your Favourite TODO App",
-                      layout=[[label], [input_box, add_button]],
+                      layout=[[label],
+                              [input_box, add_btn],
+                               [list_box, [edit_btn, complete_btn]]],
                         font= ('Helvetica', 15))
 
 while True:
   print(windows.read())
   event, value = windows.read()
+  print(f"event ={event} \nvalue = {value}")
 
   match event:
 
@@ -21,7 +29,28 @@ while True:
       new_todos = value['todo'] + "\n"
       todos.append(new_todos)
       fxns.write_todos(todos)
+      windows['todos'].update(values=todos)
     case fsg.WIN_CLOSED:
       break
 
+    case "todos":
+        windows['todo'].update(value = value['todos'][0])
+
+    case "Edit":
+      todos_to_edit = value['todos'][0]
+      new_todo = value['todo']
+
+      todos = fxns.get_todos()
+      index = todos.index(todos_to_edit)
+      todos[index] = new_todo
+      fxns.write_todos(todos)
+      windows['todos'].update(values=todos)
+
+    case "Complete":
+        todo_completed = value['todos'][0]
+        todos = fxns.get_todos()
+        todos.remove(todo_completed)
+        fxns.write_todos(todos)
+        windows['todos'].update(values=todos)
+        windows['todo'].update(value='')
 windows.close()
