@@ -21,7 +21,7 @@ exit_btn = fsg.Button("Exit", size= 4)
 windows = fsg.Window("Your Favourite TODO App",
                       layout=[[clock],[label],
                               [input_box, add_btn],
-                               [list_box, edit_btn, complete_btn]],
+                               [list_box, edit_btn, complete_btn], [clear_btn, exit_btn]],
                         font= ('Helvetica', 15))
 
 while True:
@@ -78,5 +78,13 @@ while True:
             fsg.popup("No todo Selected‼️\nSelect a todo and try again",
                       title="ERROR 🚫⛔",
                       font= ('Helvetica', 15))
+    case "Clear":
+        todos = fxns.get_todos()
+        todos.clear()
+        fxns.write_todos(todos)
+        windows["todos"].update(values={})
+
+    case "Exit":
+      break
 
 windows.close()
