@@ -2,11 +2,11 @@ import FreeSimpleGUI as fsg
 import functions as fxns
 import time
 
-fsg.theme('Black1')
+fsg.theme('Black2')
 clock = fsg.Text("", key="clock")
 label = fsg.Text("Type in a to-do")
 input_box = fsg.InputText(tooltip="Enter  todo", key= "todo",
-                          size=(35, 5))
+                          size=(35, 2))
 
 add_btn = fsg.Button("Add", size= 5)
 list_box = fsg.Listbox( values=fxns.get_todos(),
