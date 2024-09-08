@@ -1,7 +1,10 @@
 import FreeSimpleGUI as fsg
 from FreeSimpleGUI import theme_element_text_color
-
 from archive_Ext_Function import extract_archive
+import os
+
+if not os.path.exists("Archived"):
+    os.mkdir("Archived")
 
 label1 = fsg.Text("Select Archive:")
 input1 = fsg.Input()
