@@ -2,16 +2,17 @@ import FreeSimpleGUI as fsg
 import functions as fxns
 import time
 
+fsg.theme('Black1')
 clock = fsg.Text("", key="clock")
 label = fsg.Text("Type in a to-do")
 input_box = fsg.InputText(tooltip="Enter  todo", key= "todo",
-                          size=([35, 5]))
+                          size=(35, 5))
 
 add_btn = fsg.Button("Add", size= 5)
 list_box = fsg.Listbox( values=fxns.get_todos(),
                         key= 'todos',
                         enable_events=True,
-                        size=[35, 10])
+                        size=(35, 10))
 
 edit_btn = fsg.Button("Edit", size= 4)
 complete_btn = fsg.Button("Complete")
@@ -44,7 +45,7 @@ while True:
           windows['todos'].update(values=todos)
           windows['todo'].update(value="")
 
-    case fsg.WIN_CLOSED:
+    case fsg.WIN_CLOSED | "Exit":
       break
 
     case "todos":
@@ -84,7 +85,7 @@ while True:
         fxns.write_todos(todos)
         windows["todos"].update(values={})
 
-    case "Exit":
-      break
+   # case "Exit":
+    #  break
 
 windows.close()
